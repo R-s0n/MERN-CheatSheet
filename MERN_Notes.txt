@@ -23,9 +23,11 @@ const cors = require('cors');
 const port = 8000;
 
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}))
 
-require('./server/routes/[ROUTES.JS]')(app);
-    
+require('./server/routes/person.routes')(app);
+
 app.listen(port, () => console.log(`Listening on port: ${port}`) );
 
 ****************
@@ -108,3 +110,74 @@ export default () => {
 ****************
 * End template *
 ****************
+
+### Build Database
+
+(Navigate to project file)
+cd server
+cd config
+copy nul mongoose.config.js
+
+******************************
+* Template - Mongoose Config *
+******************************
+
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/[DATABASE]', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then(()=>console.log("Database connection established..."))
+    .catch(err=>console.log("ERROR: ", err));
+
+****************
+* End template *
+****************
+
+cd ../models
+copy nul [COLLECTION].model.js
+
+********************
+* Template - Model *
+********************
+
+(Example for Person object)
+
+const mongoose = require('mongoose')
+
+const PersonSchema = new mongoose.Schema({
+    firstName: {type: String},
+    lastName: {type: String}
+}, {timestamps: true});
+
+module.exports.Person = mongoose.model("Person", PersonSchema);
+
+****************
+* End template *
+****************
+
+(Add following line to server.js)
+
+require('./server/config/mongoose.config');
+
+*************************
+* Template - Controller *
+*************************
+
+(Example for function to create Person Object)
+
+models.exports.createPerson = (req, res) => {
+    const {firstName, lastName} = req.body;
+    Person.create({
+        firstName,
+        lastName
+    })
+        .then(person=>res.json(person))
+        .catch(err=>response.json(err))
+}
+
+****************
+* End template *
+****************
+
