@@ -73,6 +73,8 @@ module.exports = function(app){
 * End template *
 ****************
 
+nodemon server.js
+
 # Set Up Front-End
 
 npx create-react-app client
@@ -167,7 +169,7 @@ require('./server/config/mongoose.config');
 
 (Example for function to create Person Object)
 
-models.exports.createPerson = (req, res) => {
+module.exports.createPerson = (req, res) => {
     const {firstName, lastName} = req.body;
     Person.create({
         firstName,
