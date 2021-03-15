@@ -1,0 +1,110 @@
+# Build Project Folder
+
+mkdir [PROJECT NAME]
+cd [PROJECT NAME]
+
+# Set Up Back-End
+
+npm init -y
+
+npm install express
+npm install mongoose
+npm install cors
+
+copy nul server.js
+
+************************
+* Template - server.js *
+************************
+
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const port = 8000;
+
+app.use(cors());
+
+require('./server/routes/[ROUTES.JS]')(app);
+    
+app.listen(port, () => console.log(`Listening on port: ${port}`) );
+
+****************
+* End template *
+****************
+
+mkdir server
+cd server
+mkdir config
+mkdir controllers
+mkdir models
+mkdir routes
+
+### Build Controller
+
+*************************
+* Template - Controller *
+*************************
+
+module.exports.index = (request, response) => {
+    response.json({
+       message: "Hello World"
+    });
+}
+
+****************
+* End template *
+****************
+
+### Build Routes
+
+*********************
+* Template - Routes *
+*********************
+
+const Controller = require('../controllers/[CONTROLLER.JS]');
+
+module.exports = function(app){
+    app.get('/api', Controller.index);
+}
+
+****************
+* End template *
+****************
+
+# Set Up Front-End
+
+npx create-react-app client
+cd client
+
+npm install axios
+
+cd src
+mkdir Components
+
+************************
+* Template - Component *
+************************
+
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+
+export default () => {
+    const [message, setMessage] = useState("Loading...");
+
+    useEffect(()=>{
+        axios.get('http://localhost:8000/api')
+            .then(response => {
+                setMessage(response.data.message)
+            })
+    }, []);
+
+    return (
+        <div>
+            <h2>Message from back-end: {message}</h2>
+        </div>
+    );
+}
+
+****************
+* End template *
+****************
