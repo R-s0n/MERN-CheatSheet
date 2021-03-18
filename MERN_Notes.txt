@@ -1,7 +1,5 @@
 # Build Project Folder
 
-mkdir [P# Build Project Folder
-
 mkdir [PROJECT NAME]
 cd [PROJECT NAME]
 
