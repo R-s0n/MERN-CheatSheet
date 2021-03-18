@@ -170,7 +170,7 @@ const { Person } = require("../models/person.model");
 
 (Example for function to create Person Object)
 
-models.exports.createPerson = (req, res) => {
+module.exports.createPerson = (req, res) => {
     const {firstName, lastName} = req.body;
     Person.create({
         firstName,
